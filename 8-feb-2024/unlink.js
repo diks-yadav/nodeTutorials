@@ -1,16 +1,16 @@
 const http = require("http");
 const fs= require("fs");
 const port=9000;
-const filename="newfile.txt";
+const filename="durgesh.pdf";
 http
   .createServer(function (req, res) {
-      fs.appendFile(`/home/administrator/Desktop/nodejsproject/${filename}`,'\n students:- We are good, what about you?',function (err, data) {
+      fs.unlink(`/home/administrator/Desktop/nodejsproject/${filename}`,function (err, data) {
            if(err){
             res.end(`facing error ${err}`);
            }
            else{
             console.log("data",data);
-            res.end(`append new data in file and written in a file successfully ${data}`);
+            res.end(`${filename} File deleted successfully please check now${data}`);
            }
     });
     })
