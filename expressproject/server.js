@@ -16,16 +16,33 @@ app.get("/contact", function (req, res) {
 app.get("/about", function (req, res) {
   res.send({ message: "about api calling", status: 1 });
 });
+let user = [];
 app.post("/register", upload.single(), function (req, res) {
+  var value = 0;
   console.log("req.body", req.body);
-  var amount = req.body.amount;
-  var type = req.body.type;
-  if (type == 1) {
-    var totalAmount = +amount;
-  } else {
-    var totalAmount = +amount * 80;
+  var { firstname, lastname, email, password } = req.body;
+  user.forEach((data) => {
+    console.log("email", data);
+    if (data.email == email) {
+      value++;
+      res.send({
+        message: "user already regsitered with thuis email",
+        status: 0,
+      });
+    }
+  });
+  console.log("user", user);
+  if (value == 0) {
+    user.push({ email: email });
+    res.send({
+      message: "register api calling",
+      status: 1,
+      firstname: firstname,
+      lastname: lastname,
+      email: email,
+      password: password,
+    });
   }
-  res.send({ message: "register api calling", status: 1, amount: totalAmount });
 });
 app.listen(port, function () {
   console.log(`server listeninin on http://localhost:${port}`);
