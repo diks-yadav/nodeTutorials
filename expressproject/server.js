@@ -44,6 +44,58 @@ app.post("/register", upload.single(), function (req, res) {
     });
   }
 });
+//login api's
+app.post("/login", upload.single(), function (req, res) {
+  const { username, password } = req.body;
+  if (username && password) {
+    res.send({
+      message: "user login successfully",
+      status: 1,
+      username: username,
+      password: password,
+    });
+  } else {
+    res.send({ message: "All fields required", status: 0 });
+  }
+});
+
+//get user data
+app.get("/api/users", function (req, res) {
+  const user = [
+    {
+      id: 1,
+      name: "Abhishek",
+      email: "abhishek@gmail.com",
+    },
+    {
+      id: 2,
+      name: "Arun",
+      email: "arun@gmail.com",
+    },
+    {
+      id: 3,
+      name: "Aakash",
+      email: "aakash@gmail.com",
+    },
+    {
+      id: 4,
+      name: "ganesh",
+      email: "ganesh@gmail.com",
+    },
+    {
+      id: 5,
+      name: "harsh",
+      email: "harsh@gmail.com",
+    },
+  ];
+  if(user.length>0){
+    res.send({message:"All user Details fetch successfully",status:1,user:user});
+  }
+  else{
+    res.send({message:"User not found",status:0});
+  }
+});
+
 app.listen(port, function () {
   console.log(`server listeninin on http://localhost:${port}`);
 });
