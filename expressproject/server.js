@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const multer = require("multer");
+const nodemailer = require("nodemailer");
 const upload = multer();
 const port = 8000;
 app.get("/", function (req, res) {
@@ -88,11 +89,39 @@ app.get("/api/users", function (req, res) {
       email: "harsh@gmail.com",
     },
   ];
-  if(user.length>0){
-    res.send({message:"All user Details fetch successfully",status:1,user:user});
+  if (user.length > 0) {
+    res.send({
+      message: "All user Details fetch successfully",
+      status: 1,
+      user: user,
+    });
+  } else {
+    res.send({ message: "User not found", status: 0 });
   }
-  else{
-    res.send({message:"User not found",status:0});
+});
+
+//api to send welcome email via nodemailer
+
+app.get("/api/email-send", async function (req, res) {
+  var transport = nodemailer.createTransport({
+    host: "sandbox.smtp.mailtrap.io",
+    port: 2525,
+    auth: {
+      user: "55303d93cabfa6",
+      pass: "9082d6a171d56b",
+    },
+  });
+  const info = await transport.sendMail({
+    from: '"Fred Foo 👻" <foo@example.com>', // sender address
+    to: "durgesh@mailinator.com", // list of receivers
+    subject: "Welcome ✔", // Subject line
+    text: "Hello user", // plain text body
+    html: "<b>Hello user</b>", // html body
+  });
+  if (info) {
+    res.send({ message: "Email has been sent successfully", status: 1 });
+  } else {
+    res.send({ message: "Email sent fialed", status: 0 });
   }
 });
 
