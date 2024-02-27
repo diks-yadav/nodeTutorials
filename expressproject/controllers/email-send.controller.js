@@ -1,3 +1,4 @@
+const emailHandler = require("../helper/email");
 async function sendEmailApi(req, res) {
   const msg = "welcome to our application";
   const user = "girexe7988@gmail.com";

@@ -1,4 +1,5 @@
 let user = [];
+const emailHandler = require("../helper/email");
 async function registerApi(req, res) {
   var value = 0;
   console.log("req.body", req.body);
